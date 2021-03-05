@@ -8,8 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
+import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.utils.Utils;
+import me.jumper251.replay.utils.fetcher.Consumer;
 
 public class inventories {
 	public static Inventory replay_inv;
@@ -26,13 +29,12 @@ public class inventories {
 		if (mode == "replay") {
 			Inventory toReturn = Bukkit.createInventory(null, replay_Invrows, replay);
 			List<String> replays = ReplaySaver.getReplays();
-			int e = 0;
+			int e = 1;
 			if (replays.size() == 0) {
-				p.sendMessage(Utils.chat("&4Ausirius &cSorry no replays seem to be available"));
 				return null;
 			}
-			while (replays.size() != e) {
-				Utils.createItem(replay_inv, 1, 1, e, replays.get(e), "&4Ausirius Replays");
+			while (replays.size() >= e) {
+				Utils.createItem(replay_inv, 339, 1, e, replays.get(e-1), "&4Ausirius Replays");
 				e++;
 			}
 			toReturn.setContents(replay_inv.getContents());
@@ -43,8 +45,30 @@ public class inventories {
 	}
 	
 	public static void clicked(Player p, int slot, ItemStack clicked, String inv) {
-		if (clicked.equals(new ItemStack(Material.PAPER))) {
-			
+		if (inv.equals("replay")) {
+			if (clicked == null || clicked.getType().equals(Material.AIR)) {
+				return;
+			}
+			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
+				String replayName0 = clicked.getItemMeta().getDisplayName();
+				try {
+					ReplaySaver.load(replayName0, new Consumer<Replay>() {
+						
+						@Override
+						public void accept(Replay replay) {
+							p.sendMessage(ReplaySystem.PREFIX + Utils.chat("&cYou have loaded " + replayName0 + ". &6BETA REPLAY"));
+							replay.play(p);
+							p.sendMessage(ReplaySystem.PREFIX + Utils.chat("&6PLEASE REPORT BUGS TO THE DISCORD /DISCORD"));
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+
+					p.sendMessage(ReplaySystem.PREFIX + Utils.chat("An error occurred"));
+				}
+			} else {
+				p.sendMessage(Utils.chat("&4Ausirius Replay - &cSorry something went wrong.."));
+			}
 		}
 	}
 	

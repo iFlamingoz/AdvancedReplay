@@ -3,6 +3,7 @@ package me.jumper251.replay;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -11,6 +12,8 @@ import me.jumper251.replay.filesystem.ConfigManager;
 import me.jumper251.replay.filesystem.saving.DatabaseReplaySaver;
 import me.jumper251.replay.filesystem.saving.DefaultReplaySaver;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
+import me.jumper251.replay.inventories.inventories;
+import me.jumper251.replay.listener.InventoryClickListener;
 import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.utils.ReplayCleanup;
 import me.jumper251.replay.replaysystem.utils.Utils;
@@ -28,7 +31,7 @@ public class ReplaySystem extends JavaPlugin {
 	public static Updater updater;
 	public static Metrics metrics;
 	
-	public final static String PREFIX = Utils.chat("&4Ausirius &c");
+	public final static String PREFIX = Utils.chat("&4Ausirius Replay - &c");
 
 	
 	@Override
@@ -51,6 +54,8 @@ public class ReplaySystem extends JavaPlugin {
 		
 		ReplayManager.register();
 		ConfigManager.loadConfigs();
+		inventories.initialize();
+		Bukkit.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 		
 		ReplaySaver.register(ConfigManager.USE_DATABASE ? new DatabaseReplaySaver() : new DefaultReplaySaver());
 		

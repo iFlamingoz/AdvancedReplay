@@ -1,7 +1,6 @@
 package me.jumper251.replay.replaysystem.utils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -9,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.jumper251.replay.commands.replay.ReplayListCommand;
 import net.md_5.bungee.api.ChatColor;
 
 public class Utils {
@@ -56,8 +54,5 @@ public class Utils {
 		
 		inv.setItem(invSlot - 1, item);
 		return item;
-	}
-	private Comparator<String> dateComparator() {
-		ReplayListCommand.
 	}
 }

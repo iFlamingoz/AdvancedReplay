@@ -1,7 +1,6 @@
 package me.jumper251.replay.commands;
 
 import me.jumper251.replay.filesystem.MessageBuilder;
-import me.jumper251.replay.replaysystem.utils.Utils;
 
 public class MessageFormat {
 
@@ -52,11 +51,19 @@ public class MessageFormat {
 		return consoleMessage != null ? consoleMessage : "You must be a player to execute this command.";
 	}
 	
+//	public String getPermissionMessage() {
+//		return Utils.chat("&4Ausirius &cThis command is unavailable.");
+//	}
+//	
+//	public String getNotFoundMessage() {
+//		return Utils.chat("&4Ausirius &CIncorrect Usage!");
+//	}
+	
 	public String getPermissionMessage() {
-		return Utils.chat("&4Ausirius &cThis command is unavailable.");
+		return this.permissionMessage;
 	}
 	
 	public String getNotFoundMessage() {
-		return Utils.chat("&4Ausirius &CIncorrect Usage!");
+		return this.notFoundMessage;
 	}
 }

@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import me.jumper251.replay.inventories.inventories;
+import me.jumper251.replay.replaysystem.utils.Utils;
 
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
@@ -50,7 +51,10 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 		if (checkPermission(cs, arg)) {
 			
 			if (args.length == 0) {
-				inventories.GUI((Player) cs, "replay");
+				Player player = (Player) cs;
+				if (inventories.GUI(player, "replay") != null) {
+					player.openInventory(inventories.GUI(player, "replay"));	
+				}
 			} else {
 				for (SubCommand sub : this.subCommands) {
 					if (sub.getLabel().equalsIgnoreCase(arg) || sub.getAliases().contains(arg)) {
@@ -61,7 +65,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 						}
 						
 						if (!sub.execute(cs, cmd, label, args)) {
-							cs.sendMessage(this.format.getSyntaxMessage(this.command, sub.getArgs()));
+							cs.sendMessage(Utils.chat("&cInvalid Usage!"));
 						}
 						
 						return true;
@@ -71,7 +75,14 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 			}
 			
 		} else {
-			cs.sendMessage(this.format.getPermissionMessage());
+			if (args.length == 0) {
+				Player player = (Player) cs;
+				if (inventories.GUI(player, "replay") != null) {
+					player.openInventory(inventories.GUI(player, "replay"));	
+				} else {
+					player.sendMessage(Utils.chat("&4Ausirius Replays - &cNo replays were found/is available."));
+				}
+			}
 		}
 		
 		return true;
