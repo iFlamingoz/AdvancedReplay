@@ -1,7 +1,6 @@
 package me.jumper251.replay.commands.replay;
 
 import java.io.File;
-
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -95,7 +94,7 @@ public class ReplayListCommand extends SubCommand {
 		return null;
 	}
 	
-	private Comparator<String> dateComparator() {
+	public Comparator<String> dateComparator() {
 		return (s1, s2) -> {
 			if (getCreationDate(s1) != null && getCreationDate(s2) != null) {
 				return getCreationDate(s1).compareTo(getCreationDate(s2));

@@ -13,6 +13,7 @@ import me.jumper251.replay.filesystem.saving.DefaultReplaySaver;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
 import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.utils.ReplayCleanup;
+import me.jumper251.replay.replaysystem.utils.Utils;
 import me.jumper251.replay.utils.LogUtils;
 import me.jumper251.replay.utils.Metrics;
 import me.jumper251.replay.utils.ReplayManager;
@@ -27,7 +28,7 @@ public class ReplaySystem extends JavaPlugin {
 	public static Updater updater;
 	public static Metrics metrics;
 	
-	public final static String PREFIX = "§8[§3Replay§8] §r§7";
+	public final static String PREFIX = Utils.chat("&4Ausirius &c");
 
 	
 	@Override

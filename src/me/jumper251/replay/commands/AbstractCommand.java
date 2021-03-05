@@ -12,6 +12,8 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
+import me.jumper251.replay.inventories.inventories;
+
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
@@ -27,7 +29,6 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 		this.description = description;
 		this.subCommands = new ArrayList<>();
 		
-		this.format = setupFormat();
 		this.subCommands = Arrays.asList(setupCommands());
 	}
 	
@@ -36,15 +37,9 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 		return command;
 	}
 	
-	public List<SubCommand> getSubCommands() {
-		return subCommands;
-	}
-	
 	public String getPermission() {
 		return permission;
 	}
-
-	protected abstract MessageFormat setupFormat();
 	
 	protected abstract SubCommand[] setupCommands();
 
@@ -55,12 +50,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 		if (checkPermission(cs, arg)) {
 			
 			if (args.length == 0) {
-				cs.sendMessage(this.description);
-				for (SubCommand sub : this.subCommands) {
-					if (!checkPermission(cs, sub.getLabel().toLowerCase()) || !sub.isEnabled()) continue;
-						
-					cs.sendMessage(this.format.getOverviewMessage(this.command, sub.getArgs(), sub.getDescription()));
-				}
+				inventories.GUI((Player) cs, "replay");
 			} else {
 				for (SubCommand sub : this.subCommands) {
 					if (sub.getLabel().equalsIgnoreCase(arg) || sub.getAliases().contains(arg)) {
@@ -77,7 +67,6 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 						return true;
 					}
 				}
-				
 				cs.sendMessage(this.format.getNotFoundMessage());
 			}
 			
