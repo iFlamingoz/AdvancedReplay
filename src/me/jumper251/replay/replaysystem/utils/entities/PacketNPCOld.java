@@ -68,6 +68,7 @@ public class PacketNPCOld implements INPC{
 	
 	private Player oldVisible;
 	
+	@SuppressWarnings("unused")
 	private List<WrapperPlayServerEntityEquipment> lastEquipment;
 	
 	public PacketNPCOld(int id, UUID uuid, String name) {

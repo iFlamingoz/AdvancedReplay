@@ -2,7 +2,6 @@ package me.jumper251.replay.replaysystem.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -10,10 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-
 import com.comphenix.packetwrapper.WrapperPlayServerEntityEquipment;
 import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
-import com.comphenix.protocol.wrappers.Pair;
 
 import me.jumper251.replay.replaysystem.data.types.InvData;
 import me.jumper251.replay.replaysystem.data.types.ItemData;
@@ -33,24 +30,6 @@ public class NPCManager {
 			Material.GOLD_HELMET, Material.GOLD_CHESTPLATE, Material.GOLD_LEGGINGS, Material.GOLD_BOOTS,
 			Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS
 	});
-	
-	
-	public static List<WrapperPlayServerEntityEquipment> updateEquipmentv16(int id, InvData data) {
-		List<Pair<ItemSlot, ItemStack>> items = new ArrayList<>();
-		items.add(new Pair<>(ItemSlot.HEAD, fromID(data.getHead())));
-		items.add(new Pair<>(ItemSlot.CHEST, fromID(data.getChest())));
-		items.add(new Pair<>(ItemSlot.LEGS, fromID(data.getLeg())));
-		items.add(new Pair<>(ItemSlot.FEET, fromID(data.getBoots())));
-		items.add(new Pair<>(ItemSlot.MAINHAND, fromID(data.getMainHand())));
-		items.add(new Pair<>(ItemSlot.OFFHAND, fromID(data.getOffHand())));
-
-		WrapperPlayServerEntityEquipment packet = new WrapperPlayServerEntityEquipment();
-
-		packet.setEntityID(id);
-		packet.getHandle().getSlotStackPairLists().write(0, items);
-		
-		return Collections.singletonList(packet);
-	}
 
 	
 	public static List<WrapperPlayServerEntityEquipment> updateEquipment(int id, InvData data) {
@@ -157,17 +136,11 @@ public class NPCManager {
 		return new ItemData(SerializableItemStack.fromItemStack(stack));
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static InvData copyFromPlayer(Player player, boolean armor, boolean off) {
 		InvData data = new InvData();
 		
 		if (VersionUtil.isCompatible(VersionEnum.V1_8)) {
 			data.setMainHand(fromItemStack(player.getItemInHand()));
-		} else {
-			data.setMainHand(fromItemStack(player.getInventory().getItemInMainHand()));
-			if (off) {
-				data.setOffHand(fromItemStack(player.getInventory().getItemInOffHand()));
-			}
 		}
 		
 		if (armor) {

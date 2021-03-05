@@ -3,20 +3,16 @@ package me.jumper251.replay.replaysystem.replaying;
 
 
 import java.util.ArrayDeque;
-
-
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.jumper251.replay.replaysystem.data.types.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -26,13 +22,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.comphenix.packetwrapper.AbstractPacket;
 import com.comphenix.packetwrapper.WrapperPlayServerEntityDestroy;
-import com.comphenix.packetwrapper.WrapperPlayServerEntityEquipment;
 import com.comphenix.packetwrapper.WrapperPlayServerEntityVelocity;
+import com.comphenix.protocol.wrappers.EnumWrappers.PlayerAction;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedSignedProperty;
-
-import com.comphenix.protocol.wrappers.EnumWrappers.PlayerAction;
 
 import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.filesystem.ConfigManager;
@@ -40,6 +34,26 @@ import me.jumper251.replay.filesystem.MessageBuilder;
 import me.jumper251.replay.replaysystem.data.ActionData;
 import me.jumper251.replay.replaysystem.data.ActionType;
 import me.jumper251.replay.replaysystem.data.ReplayData;
+import me.jumper251.replay.replaysystem.data.types.AnimationData;
+import me.jumper251.replay.replaysystem.data.types.BedEnterData;
+import me.jumper251.replay.replaysystem.data.types.BlockChangeData;
+import me.jumper251.replay.replaysystem.data.types.ChatData;
+import me.jumper251.replay.replaysystem.data.types.EntityActionData;
+import me.jumper251.replay.replaysystem.data.types.EntityAnimationData;
+import me.jumper251.replay.replaysystem.data.types.EntityData;
+import me.jumper251.replay.replaysystem.data.types.EntityItemData;
+import me.jumper251.replay.replaysystem.data.types.EntityMovingData;
+import me.jumper251.replay.replaysystem.data.types.FishingData;
+import me.jumper251.replay.replaysystem.data.types.InvData;
+import me.jumper251.replay.replaysystem.data.types.ItemData;
+import me.jumper251.replay.replaysystem.data.types.LocationData;
+import me.jumper251.replay.replaysystem.data.types.MetadataUpdate;
+import me.jumper251.replay.replaysystem.data.types.MovingData;
+import me.jumper251.replay.replaysystem.data.types.ProjectileData;
+import me.jumper251.replay.replaysystem.data.types.SignatureData;
+import me.jumper251.replay.replaysystem.data.types.SpawnData;
+import me.jumper251.replay.replaysystem.data.types.VelocityData;
+import me.jumper251.replay.replaysystem.data.types.WorldChangeData;
 import me.jumper251.replay.replaysystem.recording.PlayerWatcher;
 import me.jumper251.replay.replaysystem.utils.MetadataBuilder;
 import me.jumper251.replay.replaysystem.utils.NPCManager;
@@ -129,10 +143,6 @@ public class ReplayingUtils {
 			if (action.getPacketData() instanceof AnimationData) {
 				AnimationData animationData = (AnimationData) action.getPacketData();
 				npc.animate(animationData.getId());
-				
-				if (animationData.getId() == 1 && !VersionUtil.isCompatible(VersionEnum.V1_8)) {
-					replayer.getWatchingPlayer().playSound(npc.getLocation(), Sound.ENTITY_PLAYER_HURT, 5F, 5.0F);
-				}
 			}
 
 			if (action.getPacketData() instanceof ChatData) {
@@ -147,14 +157,7 @@ public class ReplayingUtils {
 			if (action.getPacketData() instanceof InvData) {
 				InvData invData = (InvData) action.getPacketData();
 				
-				if (!VersionUtil.isCompatible(VersionEnum.V1_8)) {
-					List<WrapperPlayServerEntityEquipment> equipment = VersionUtil.isBelow(VersionEnum.V1_15) ? NPCManager.updateEquipment(npc.getId(), invData) : NPCManager.updateEquipmentv16(npc.getId(), invData);
-					npc.setLastEquipment(equipment);
-					
-					for (WrapperPlayServerEntityEquipment packet : equipment) {
-						packet.sendPacket(replayer.getWatchingPlayer());
-					}
-				} else {
+				if (VersionUtil.isCompatible(VersionEnum.V1_8)) {
 					for (com.comphenix.packetwrapper.old.WrapperPlayServerEntityEquipment packet : NPCManager.updateEquipmentOld(npc.getId(), invData)) {
 						packet.sendPacket(replayer.getWatchingPlayer());
 					}

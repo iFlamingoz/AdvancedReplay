@@ -23,7 +23,7 @@ public class ItemUtils {
 	  public static boolean isUsable(Material mat) {
 		  if (mat == null) return false;
 
-		  return mat.isEdible() || mat == Material.POTION || mat == Material.MILK_BUCKET || mat == Material.BOW || (!VersionUtil.isCompatible(VersionEnum.V1_8) && mat == Material.SHIELD) || (VersionUtil.isCompatible(VersionEnum.V1_8) && isSword(mat));
+		  return mat.isEdible() || mat == Material.POTION || mat == Material.MILK_BUCKET || mat == Material.BOW || (!VersionUtil.isCompatible(VersionEnum.V1_8)  || (VersionUtil.isCompatible(VersionEnum.V1_8) && isSword(mat)));
 	  }
 	  
 	  public static boolean isSword(Material mat) {
@@ -39,12 +39,6 @@ public class ItemUtils {
 		    INTERACTABLE.add(Material.REDSTONE_COMPARATOR);
 		    INTERACTABLE.add(Material.REDSTONE_COMPARATOR_OFF);
 		    INTERACTABLE.add(Material.REDSTONE_COMPARATOR_ON);
-		    if(!VersionUtil.isCompatible(VersionEnum.V1_8)){
-		    	INTERACTABLE.add(Material.COMMAND);
-		    	INTERACTABLE.add(Material.COMMAND_CHAIN);
-		    	INTERACTABLE.add(Material.COMMAND_MINECART);
-		    	INTERACTABLE.add(Material.COMMAND_REPEATING);
-		    }
 		    INTERACTABLE.add(Material.BREWING_STAND);
 		    INTERACTABLE.add(Material.FURNACE);
 		    INTERACTABLE.add(Material.BURNING_FURNACE);

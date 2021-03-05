@@ -127,7 +127,6 @@ public class RecordingListener extends AbstractListener {
 
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onConsume(PlayerItemConsumeEvent e) {
 		Player p = e.getPlayer();
@@ -260,7 +259,6 @@ public class RecordingListener extends AbstractListener {
 
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onThrow(PlayerDropItemEvent e) {
 		Player p = e.getPlayer();

@@ -40,7 +40,6 @@ import me.jumper251.replay.replaysystem.utils.entities.INPC;
 
 public class ReplayListener extends AbstractListener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -53,28 +52,28 @@ public class ReplayListener extends AbstractListener {
 				if (p.getItemInHand().getItemMeta() == null) return;
 				
 				ItemMeta meta = p.getItemInHand().getItemMeta();
-				ItemConfigType itemType = ItemConfig.getByIdAndName(p.getItemInHand().getType(), meta.getDisplayName().replaceAll("§", "&"));
+				ItemConfigType itemType = ItemConfig.getByIdAndName(p.getItemInHand().getType(), meta.getDisplayName().replaceAll("Â§", "&"));
 				
 				if (itemType == ItemConfigType.PAUSE) {
 					replayer.setPaused(!replayer.isPaused());
-					ReplayHelper.sendTitle(p, null, "§c❙❙", 20);
+					ReplayHelper.sendTitle(p, null, "Â§câ�™â�™", 20);
 				}
 					
 				if (itemType == ItemConfigType.FORWARD) {
 					replayer.getUtils().forward();
-					ReplayHelper.sendTitle(p, null, "§a»»", 20);
+					ReplayHelper.sendTitle(p, null, "Â§aÂ»Â»", 20);
 
 				}
 				if (itemType == ItemConfigType.BACKWARD) {
 					replayer.getUtils().backward();
-					ReplayHelper.sendTitle(p, null, "§c««", 20);
+					ReplayHelper.sendTitle(p, null, "Â§cÂ«Â«", 20);
 
 				}
 				
 				
 				if (itemType == ItemConfigType.RESUME) {
 					replayer.setPaused(!replayer.isPaused());
-					ReplayHelper.sendTitle(p, null, "§a➤", 20);
+					ReplayHelper.sendTitle(p, null, "Â§aâž¤", 20);
 
 				}
 				
@@ -131,11 +130,11 @@ public class ReplayListener extends AbstractListener {
 			if (ReplayHelper.replaySessions.containsKey(p.getName())) {
 				e.setCancelled(true);
 				
-				if (e.getView().getTitle().equalsIgnoreCase("§7Teleporter")) {
+				if (e.getView().getTitle().equalsIgnoreCase("Â§7Teleporter")) {
 					Replayer replayer = ReplayHelper.replaySessions.get(p.getName());
 					
 					if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null && e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getType().getId() == 397) {
-						String owner = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("§6", "");
+						String owner = e.getCurrentItem().getItemMeta().getDisplayName().replaceAll("Â§6", "");
 						if (replayer.getNPCList().containsKey(owner)) {
 							INPC npc = replayer.getNPCList().get(owner);
 							p.teleport(npc.getLocation());
