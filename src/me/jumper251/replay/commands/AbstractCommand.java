@@ -53,7 +53,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 			if (args.length == 0) {
 				Player player = (Player) cs;
 				if (inventories.GUI(player, "replay") != null) {
-					player.openInventory(inventories.GUI(player, "replay"));	
+					player.openInventory(inventories.GUI(player, "replay"));
 				}
 			} else {
 				for (SubCommand sub : this.subCommands) {
