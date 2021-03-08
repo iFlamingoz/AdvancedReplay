@@ -11,7 +11,6 @@ import me.jumper251.replay.commands.SubCommand;
 import me.jumper251.replay.filesystem.ConfigManager;
 
 public class ReplayReloadCommand extends SubCommand {
-
 	public ReplayReloadCommand(AbstractCommand parent) {
 		super(parent, "reload", "Reloads the config", "reload", false);
 	}

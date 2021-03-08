@@ -17,6 +17,7 @@ import me.jumper251.replay.filesystem.ConfigManager;
 import me.jumper251.replay.filesystem.ItemConfig;
 import me.jumper251.replay.filesystem.ItemConfigOption;
 import me.jumper251.replay.filesystem.ItemConfigType;
+import me.jumper251.replay.replaysystem.utils.Utils;
 
 public class ReplaySession {
 
@@ -44,7 +45,13 @@ public class ReplaySession {
 	
 	public void startSession() {
 		this.content = this.player.getInventory().getContents();
-		this.start = this.player.getLocation();
+		
+		
+		if (Bukkit.getServerName().equals("Practice")) {
+			this.start = new Location(Bukkit.getWorld("world"), 4.5, 14, -5);
+		} else {
+			this.start = this.player.getLocation();	
+		}
 		
 		this.level = this.player.getLevel();
 		this.xp = this.player.getExp();

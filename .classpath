@@ -3,6 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Code/buildtools/API&apos;S/ProtocolLib.jar"/>
-	<classpathentry kind="lib" path="C:/Code/buildtools/spigot-1.8.8.jar"/>
+	<classpathentry kind="lib" path="C:/Code/buildtools/API&apos;S/FOXSPIGOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

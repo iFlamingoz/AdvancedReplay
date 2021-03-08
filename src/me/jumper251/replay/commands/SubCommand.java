@@ -6,8 +6,15 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public abstract class SubCommand {
+import me.jumper251.replay.ReplaySystem;
 
+public abstract class SubCommand {
+	ReplaySystem plugin;
+
+	public SubCommand(ReplaySystem plugin) {
+		this.plugin = plugin;
+	}
+	
 	private AbstractCommand parent;
 	private String label, description, args;
 	private boolean playerOnly, enabled = true;
@@ -65,5 +72,9 @@ public abstract class SubCommand {
 	
 	public AbstractCommand getParent() {
 		return parent;
+	}
+	
+	public ReplaySystem plugin() {
+		return this.plugin;
 	}
 }

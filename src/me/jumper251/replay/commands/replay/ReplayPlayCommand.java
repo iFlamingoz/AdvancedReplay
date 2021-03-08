@@ -6,6 +6,7 @@ package me.jumper251.replay.commands.replay;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ import me.jumper251.replay.commands.SubCommand;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
 import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.replaying.ReplayHelper;
+import me.jumper251.replay.replaysystem.utils.Utils;
 import me.jumper251.replay.utils.fetcher.Consumer;
 
 public class ReplayPlayCommand extends SubCommand {
@@ -34,6 +36,17 @@ public class ReplayPlayCommand extends SubCommand {
 		final Player p = (Player)cs;	
 		
 		if (ReplaySaver.exists(name) && !ReplayHelper.replaySessions.containsKey(p.getName())) {
+			if (name.startsWith("&6P")) {
+				if (!Bukkit.getServerName().equals("Practice")) {
+					cs.sendMessage(Utils.chat("Sorry but you must be in practice to view this replay!"));
+					return true;
+				}
+			} else if (name.startsWith("&6AR")) {
+				if (!Bukkit.getServerName().equals("ArmsRace")) {
+					cs.sendMessage(Utils.chat("Sorry but you must be in ArmsRace to view this replay!"));
+					return true;
+				}
+			}
 			p.sendMessage(ReplaySystem.PREFIX + "Loading replay §e" + name + "§7...");
 			try {
 				ReplaySaver.load(args[1], new Consumer<Replay>() {

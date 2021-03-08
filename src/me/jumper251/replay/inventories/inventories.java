@@ -34,7 +34,7 @@ public class inventories {
 				return null;
 			}
 			while (replays.size() >= e) {
-				Utils.createItem(replay_inv, 339, 1, e, replays.get(e-1), "&4Ausirius Replays");
+				Utils.createItem(replay_inv, 339, 1, e, Utils.chat(replays.get(e-1)), Utils.chat("&4Ausirius Replays"));
 				e++;
 			}
 			toReturn.setContents(replay_inv.getContents());
@@ -51,6 +51,17 @@ public class inventories {
 			}
 			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
 				String replayName0 = clicked.getItemMeta().getDisplayName();
+				if (replayName0.startsWith("&6P")) {
+					if (!Bukkit.getServerName().equals("Practice")) {
+						p.sendMessage(Utils.chat("Sorry but you must be in practice to view this replay!"));
+						return;
+					}
+				} else if (replayName0.startsWith("&6AR")) {
+					if (!Bukkit.getServerName().equals("ArmsRace")) {
+						p.sendMessage(Utils.chat("Sorry but you must be in ArmsRace to view this replay!"));
+						return;
+					}
+				}
 				try {
 					ReplaySaver.load(replayName0, new Consumer<Replay>() {
 						

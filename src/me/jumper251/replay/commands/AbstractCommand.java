@@ -18,6 +18,7 @@ import me.jumper251.replay.replaysystem.utils.Utils;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
+	@SuppressWarnings("unused")
 	private String command, description;
 	private String permission;
 	private List<SubCommand> subCommands;
