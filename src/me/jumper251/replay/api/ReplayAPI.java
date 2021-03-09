@@ -142,7 +142,11 @@ public class ReplayAPI {
 			String name = gameIniReplaysNames.get(INT);
 			if (ReplayManager.activeReplays.containsKey(name) && ReplayManager.activeReplays.get(name).isRecording()) {
 				Replay replay = ReplayManager.activeReplays.get(name);
-				replay.getRecorder().stop(true);	
+				if (replay.getRecorder().getData().getActions().size() == 0) {
+					replay.getRecorder().stop(false);
+				} else {
+					replay.getRecorder().stop(true);		
+				}
 			} else {
 				Bukkit.getLogger().warning("WARN: STOP KEY WAS NOT RECORDING/DID NOT EXIST! " + INT);
 				return;

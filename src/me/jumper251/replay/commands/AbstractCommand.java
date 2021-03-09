@@ -55,6 +55,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 				Player player = (Player) cs;
 				if (inventories.GUI(player, "replay") != null) {
 					player.openInventory(inventories.GUI(player, "replay"));
+				} else {
+					player.sendMessage(Utils.chat("&4Ausirius Replays - &cNo replays were found/is available."));
 				}
 			} else {
 				for (SubCommand sub : this.subCommands) {
