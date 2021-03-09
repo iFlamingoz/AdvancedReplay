@@ -1,16 +1,6 @@
 package me.jumper251.replay.replaysystem.recording;
 
 import java.util.ArrayList;
-
-
-
-
-
-
-
-
-
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +29,6 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers.PlayerAction;
 import com.comphenix.protocol.wrappers.EnumWrappers.PlayerDigType;
-
 
 import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.filesystem.ConfigManager;
@@ -300,10 +289,14 @@ public class PacketRecorder extends AbstractListener{
             		if (event.getPacketType() == PacketType.Play.Server.ENTITY_TELEPORT) {
             			WrapperPlayServerEntityTeleport packet = new WrapperPlayServerEntityTeleport(event.getPacket());
 
-            			if (entityLookup.containsKey(packet.getEntityID()) && entityLookup.get(packet.getEntityID()).equalsIgnoreCase(p.getName())) {
-            				Location loc = packet.getEntity(p.getWorld()).getLocation();
+            			if (entityLookup.containsKey(packet.getEntityID()) && entityLookup.containsKey(packet.getEntityID())) {
+            				if (entityLookup.get(packet.getEntityID()).equalsIgnoreCase(p.getName())) {
+            					if (packet.getEntity(p.getWorld()).getLocation() != null) {
+                					Location loc = packet.getEntity(p.getWorld()).getLocation();
 
-            				addData(p.getName(), new EntityMovingData(packet.getEntityID(), loc.getX(), loc.getY(), loc.getZ(), packet.getPitch(), packet.getYaw()));
+                    				addData(p.getName(), new EntityMovingData(packet.getEntityID(), loc.getX(), loc.getY(), loc.getZ(), packet.getPitch(), packet.getYaw()));		
+            					}
+            				}
             			}
             		}
 

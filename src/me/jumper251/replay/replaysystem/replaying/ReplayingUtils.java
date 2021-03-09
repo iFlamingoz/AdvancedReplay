@@ -452,7 +452,7 @@ public class ReplayingUtils {
 	}
 	
 	private void spawnProjectile(ProjectileData projData, FishingData fishing, World world, int id) {
-		if (projData != null && projData.getType() != EntityType.FISHING_HOOK) {
+		if (projData != null && projData.getType() != EntityType.FISHING_HOOK && projData.getType() != EntityType.ENDER_PEARL) {
 			new BukkitRunnable() {
 			
 				@Override
