@@ -470,7 +470,7 @@ public class ReplayingUtils {
 			
 			hooks.put(fishing.getId(), rndID);
 			packet.sendPacket(replayer.getWatchingPlayer());
-		}
+		} 
 	}
 	
 	private void setBlockChange(BlockChangeData blockChange) {
