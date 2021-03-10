@@ -1,5 +1,8 @@
 package me.jumper251.replay.inventories;
 
+import java.io.File;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -9,6 +12,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.jumper251.replay.ReplaySystem;
+import me.jumper251.replay.filesystem.saving.DatabaseReplaySaver;
+import me.jumper251.replay.filesystem.saving.DefaultReplaySaver;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
 import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.utils.Utils;
@@ -33,6 +38,7 @@ public class inventories {
 			if (replays.size() == 0) {
 				return null;
 			}
+			replays.sort(dateComparator());
 			while (replays.size() >= e) {
 				Utils.createItem(replay_inv, 339, 1, e, Utils.chat(replays.get(e-1)), Utils.chat("&4Ausirius Replays"));
 				e++;
@@ -42,6 +48,27 @@ public class inventories {
 		} else {
 			return null;
 		}
+	}
+	public static Comparator<String> dateComparator() {
+		return (s1, s2) -> {
+			if (getCreationDate(s1) != null && getCreationDate(s2) != null) {
+				return getCreationDate(s1).compareTo(getCreationDate(s2));
+			} else {
+				return 0;
+			}
+			
+		};
+	}
+	private static Date getCreationDate(String replay) {
+		if (ReplaySaver.replaySaver instanceof DefaultReplaySaver) {
+			return new Date(new File(DefaultReplaySaver.DIR, replay + ".replay").lastModified());
+		}
+		
+		if (ReplaySaver.replaySaver instanceof DatabaseReplaySaver) {
+			return new Date(DatabaseReplaySaver.replayCache.get(replay).getTime());
+		}
+		
+		return null;
 	}
 	
 	public static void clicked(Player p, int slot, ItemStack clicked, String inv) {
