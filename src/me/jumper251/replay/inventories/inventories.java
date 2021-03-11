@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +39,7 @@ public class inventories {
 			}
 			replays.sort(dateComparator());
 			while (replays.size() >= e) {
-				Utils.createItem(replay_inv, 339, 1, e, Utils.chat(replays.get(e-1)), Utils.chat("&4Ausirius Replays"));
+				Utils.createItem(replay_inv, 339, 1, e, replays.get((replays.size()-(e-1))-1), Utils.chat("&4Ausirius Replays"));
 				e++;
 			}
 			toReturn.setContents(replay_inv.getContents());
@@ -73,9 +72,6 @@ public class inventories {
 	
 	public static void clicked(Player p, int slot, ItemStack clicked, String inv) {
 		if (inv.equals("replay")) {
-			if (clicked == null || clicked.getType().equals(Material.AIR) || clicked == null) {
-				return;
-			}
 			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
 				String replayName0 = clicked.getItemMeta().getDisplayName();
 				if (replayName0.startsWith("&6P")) {
@@ -91,7 +87,6 @@ public class inventories {
 				}
 				try {
 					ReplaySaver.load(replayName0, new Consumer<Replay>() {
-						
 						@Override
 						public void accept(Replay replay) {
 							p.sendMessage(ReplaySystem.PREFIX + Utils.chat("&cYou have loaded " + replayName0 + ". &6BETA REPLAY"));

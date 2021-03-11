@@ -1,11 +1,5 @@
 package me.jumper251.replay.listener;
 
-
-
-
-
-
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;

@@ -120,7 +120,7 @@ public class ReplayAPI {
 		ConsoleCommandSender cs = Bukkit.getConsoleSender();
 		if (players.length > 0) {
 			if (Bukkit.getServerName().equals("Practice")) {
-				ReplayAPI.getInstance().recordReplay("&6P-" + players[0].getName() + "-" + players[1].getName() + "-"
+				ReplayAPI.getInstance().recordReplay("§6P-" + players[0].getName() + "-" + players[1].getName() + "-"
 						+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
 			} else if (Bukkit.getServerName().equals("ArmsRace")) {
 				ReplayAPI.getInstance()
@@ -133,7 +133,7 @@ public class ReplayAPI {
 			playerUUIDS.add(players[0].getUniqueId().toString());
 			playerUUIDS.add(players[1].getUniqueId().toString());
 			gameIniReplays.put(ReplaySaver.getReplays().size()+1, playerUUIDS);
-			gameIniReplaysNames.put(ReplaySaver.getReplays().size() + 1, "&6P-" + players[0].getName() + "-" + players[1].getName() + "-" + String.valueOf(ReplaySaver.getReplays().size() + 1));
+			gameIniReplaysNames.put(ReplaySaver.getReplays().size() + 1, "§6P-" + players[0].getName() + "-" + players[1].getName() + "-" + String.valueOf(ReplaySaver.getReplays().size() + 1));
 		}
 	}
 	
@@ -145,7 +145,7 @@ public class ReplayAPI {
 				if (replay.getRecorder().getData().getActions().size() == 0) {
 					replay.getRecorder().stop(false);
 				} else {
-					replay.getRecorder().stop(true);		
+					replay.getRecorder().stop(true);
 				}
 			} else {
 				Bukkit.getLogger().warning("WARN: STOP KEY WAS NOT RECORDING/DID NOT EXIST! " + INT);
