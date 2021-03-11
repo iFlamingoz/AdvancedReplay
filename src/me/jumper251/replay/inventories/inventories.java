@@ -73,7 +73,7 @@ public class inventories {
 	
 	public static void clicked(Player p, int slot, ItemStack clicked, String inv) {
 		if (inv.equals("replay")) {
-			if (clicked == null || clicked.getType().equals(Material.AIR)) {
+			if (clicked == null || clicked.getType().equals(Material.AIR) || clicked == null) {
 				return;
 			}
 			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
@@ -108,6 +108,5 @@ public class inventories {
 				p.sendMessage(Utils.chat("&4Ausirius Replay - &cSorry something went wrong.."));
 			}
 		}
-	}
-	
+	}	
 }
