@@ -84,6 +84,9 @@ public class inventories {
 						p.sendMessage(Utils.chat("Sorry but you must be in ArmsRace to view this replay!"));
 						return;
 					}
+				} else {
+					p.sendMessage(Utils.chat("&4Incorrect replay arguments!"));
+					return;
 				}
 				try {
 					ReplaySaver.load(replayName0, new Consumer<Replay>() {
