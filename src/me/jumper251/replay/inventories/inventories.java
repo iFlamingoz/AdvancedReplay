@@ -74,12 +74,12 @@ public class inventories {
 		if (inv.equals("replay")) {
 			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
 				String replayName0 = clicked.getItemMeta().getDisplayName();
-				if (replayName0.startsWith("&6P")) {
+				if (replayName0.startsWith("§6P")) {
 					if (!Bukkit.getServerName().equals("Practice")) {
 						p.sendMessage(Utils.chat("Sorry but you must be in practice to view this replay!"));
 						return;
 					}
-				} else if (replayName0.startsWith("&6AR")) {
+				} else if (replayName0.startsWith("§6AR")) {
 					if (!Bukkit.getServerName().equals("ArmsRace")) {
 						p.sendMessage(Utils.chat("Sorry but you must be in ArmsRace to view this replay!"));
 						return;

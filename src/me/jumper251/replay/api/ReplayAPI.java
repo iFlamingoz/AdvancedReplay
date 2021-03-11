@@ -40,6 +40,10 @@ public class ReplayAPI {
 	public int GetReplaysNum() {
 		return ReplaySaver.getReplays().size();
 	}
+	
+	public int getActiveReplays() {
+		return ReplayManager.activeReplays.size();
+	}
 
 	public Replay recordReplay(String name, CommandSender sender, Player... players) {
 		List<Player> toRecord = new ArrayList<Player>();
