@@ -31,7 +31,6 @@ public class NPCManager {
 			Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS
 	});
 
-	
 	public static List<WrapperPlayServerEntityEquipment> updateEquipment(int id, InvData data) {
 		List<WrapperPlayServerEntityEquipment> list = new ArrayList<WrapperPlayServerEntityEquipment>();
 		

@@ -120,7 +120,6 @@ public class ReplaySession {
 						player.showPlayer(all);
 					}
 				}
-				
 			}
 		}.runTask(ReplaySystem.getInstance());
 		

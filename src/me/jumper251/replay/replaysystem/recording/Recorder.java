@@ -172,7 +172,7 @@ public class Recorder {
 				public void run() {
 					PlayerInfo info = (PlayerInfo) WebsiteFetcher.getJson("https://api.mojang.com/users/profiles/minecraft/" + player.getName(), true, new JsonData(true, new PlayerInfo()));
 
-					if (info != null) {		
+					if (info != null) {
 						SkinInfo skin = (SkinInfo) WebsiteFetcher.getJson("https://sessionserver.mojang.com/session/minecraft/profile/" + info.getId() + "?unsigned=false", true, new JsonData(true, new SkinInfo()));
 						
 						Map<String, String> props = skin.getProperties().get(0);
