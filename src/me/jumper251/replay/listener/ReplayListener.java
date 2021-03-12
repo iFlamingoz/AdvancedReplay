@@ -94,8 +94,6 @@ public class ReplayListener extends AbstractListener {
 							 replayer.setSpeed(0.25D);
 						}
 					}
-					
-					
 				}
 				
 				if (itemType == ItemConfigType.LEAVE) {
@@ -236,7 +234,6 @@ public class ReplayListener extends AbstractListener {
 		}
 		
 	}
-	
 
 	@EventHandler
 	public void onWorldChange(PlayerChangedWorldEvent e) {

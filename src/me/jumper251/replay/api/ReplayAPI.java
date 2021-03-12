@@ -49,7 +49,12 @@ public class ReplayAPI {
 		List<Player> toRecord = new ArrayList<Player>();
 
 		if (players != null && players.length > 0) {
-			toRecord = Arrays.asList(players);
+			for (Player p : players) {
+				toRecord.add(p);
+			}
+			if (toRecord != Arrays.asList(players)) {
+				Bukkit.getLogger().warning("WARRRRNNN!!! list t");
+			}
 		} else {
 			for (Player all : Bukkit.getOnlinePlayers()) {
 				toRecord.add(all);

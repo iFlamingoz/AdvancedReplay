@@ -103,12 +103,10 @@ public class ReplayHelper {
 		titlePacket.setTitle(title != null ? WrappedChatComponent.fromText(title) : WrappedChatComponent.fromText(""));
 		
 		titlePacket.sendPacket(player);
-		
-		
 	}
 	
 	public static boolean isInRange(Location loc1, Location loc2) {
-		return loc1.getWorld().getName().equals(loc2.getWorld().getName()) && (loc1.distance(loc2) <= 48D);
+		return loc1.getWorld().getName().equals(loc2.getWorld().getName()) && (loc1.distance(loc2) <= 90D);
 	}
 	
 }

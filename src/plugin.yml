@@ -6,4 +6,4 @@ depend: [ProtocolLib]
 commands:
   replay:
     description: View the replay
-    aliases: [rp]
+    aliases: [rp, replays, repl]

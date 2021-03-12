@@ -31,9 +31,9 @@ public class ReplayLeaveCommand extends SubCommand {
 				@Override
 				public void run() {
 					if (Bukkit.getServerName().equals("Practice")) {
-						Utils.Teleport(p, Bukkit.getWorld("world"), 4.5, 14, -5);	
+						Utils.Teleport(p, "world", 4.5, 14, -5);	
 					} else if (Bukkit.getServerName().equals("Lobby")) {
-						Utils.Teleport(p, Bukkit.getWorld("world"), 0.5, 16, 0.5);
+						Utils.Teleport(p, "world", 0.5, 16, 0.5);
 					}	
 				}
 			});

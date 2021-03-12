@@ -3,9 +3,9 @@ package me.jumper251.replay.replaysystem.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -59,13 +59,7 @@ public class Utils {
 		return item;
 	}
 	
-	public static void Teleport(Player player, World world, double x, double y, double z) {
-		player.teleport(new Location(world, x, y, z));
-		if (player.getLocation().getChunk().isLoaded()) {
-			player.getLocation().getChunk().unload();
-			player.getLocation().getChunk().load();
-		} else {
-			player.getLocation().getChunk().load();
-		}
+	public static void Teleport(Player player, String world, double x, double y, double z) {
+		player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
 	}
 }
