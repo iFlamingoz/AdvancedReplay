@@ -1,7 +1,6 @@
 package me.jumper251.replay.api;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,9 +50,6 @@ public class ReplayAPI {
 		if (players != null && players.length > 0) {
 			for (Player p : players) {
 				toRecord.add(p);
-			}
-			if (toRecord != Arrays.asList(players)) {
-				Bukkit.getLogger().warning("WARRRRNNN!!! list t");
 			}
 		} else {
 			for (Player all : Bukkit.getOnlinePlayers()) {

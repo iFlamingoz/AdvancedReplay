@@ -21,7 +21,7 @@ import me.jumper251.replay.utils.fetcher.Consumer;
 public class inventories {
 	public static Inventory replay_inv;
 	public static String replay;
-	public static int replay_Invrows = 5 * 9;
+	public static int replay_Invrows = 7 * 9;
 	
 	public static void initialize() {
 		replay = Utils.chat("&6Replay");
@@ -39,7 +39,7 @@ public class inventories {
 			}
 			replays.sort(dateComparator());
 			while (replays.size() >= e) {
-				Utils.createItem(replay_inv, 339, 1, e, replays.get((replays.size()-(e-1))-1), Utils.chat("&4Ausirius Replays"));
+				Utils.createItem(replay_inv, 339, 1, e, replays.get(replays.size()-e), Utils.chat("&4Ausirius Replays"));
 				e++;
 			}
 			toReturn.setContents(replay_inv.getContents());

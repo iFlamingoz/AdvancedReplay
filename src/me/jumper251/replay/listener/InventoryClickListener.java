@@ -13,6 +13,7 @@ public class InventoryClickListener implements Listener {
 	public void onClick(InventoryClickEvent e) {
 		if (e.getInventory().getTitle().equals(Utils.chat("&6Replay"))) {
 			if (e.getCurrentItem() == null) {
+				e.getWhoClicked().closeInventory();
 				return;
 			}
 			inventories.clicked((Player) e.getWhoClicked(), e.getSlot(), e.getCurrentItem(), "replay");
