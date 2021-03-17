@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.filesystem.saving.IReplaySaver;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
 import me.jumper251.replay.replaysystem.Replay;
@@ -120,27 +121,31 @@ public class ReplayAPI {
 		List<Player> playerList = new ArrayList<Player>();
 		playerList.add(p1);
 		playerList.add(p2);
-		Player[] players = new Player[playerList.size()];
-		players = playerList.toArray(players);
 		ConsoleCommandSender cs = Bukkit.getConsoleSender();
-		if (players.length > 0) {
-			if (Bukkit.getServerName().equals("Practice")) {
-				ReplayAPI.getInstance().recordReplay("§6P-" + players[0].getName() + "-" + players[1].getName() + "-"
-						+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
-			} else if (Bukkit.getServerName().equals("ArmsRace")) {
-				ReplayAPI.getInstance()
-						.recordReplay(Utils.chat("&6AR-" + players[0].getName() + "-" + players[1].getName() + "-")
-								+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
-			} else {
-				return;
+		Player[] players1 = new Player[playerList.size()];
+		players1 = playerList.toArray(players1);
+		Bukkit.getServer().getScheduler().runTaskLater(ReplaySystem.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				Player[] players = new Player[playerList.size()];
+				players = playerList.toArray(players);
+				if (Bukkit.getServerName().equals("Practice")) {
+					ReplayAPI.getInstance().recordReplay("§6P-" + players[0].getName() + "-" + players[1].getName() + "-"
+							+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
+				} else if (Bukkit.getServerName().equals("ArmsRace")) {
+					ReplayAPI.getInstance().recordReplay(Utils.chat("&6AR-" + players[0].getName() + "-" + players[1].getName() + "-")
+							+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
+				} else {
+					return;
+				}
+				List<String> playerUUIDS = new ArrayList<>();
+				playerUUIDS.add(players[0].getUniqueId().toString());
+				playerUUIDS.add(players[1].getUniqueId().toString());
+				gameIniReplays.put(ReplaySaver.getReplays().size()+1, playerUUIDS);
 			}
-			List<String> playerUUIDS = new ArrayList<>();
-			playerUUIDS.add(players[0].getUniqueId().toString());
-			playerUUIDS.add(players[1].getUniqueId().toString());
-			gameIniReplays.put(ReplaySaver.getReplays().size()+1, playerUUIDS);
-			gameIniReplaysNames.put(ReplaySaver.getReplays().size() + 1, "§6P-" + players[0].getName() + "-" + players[1].getName() + "-" + String.valueOf(ReplaySaver.getReplays().size() + 1));
+		}, 13L);
+		gameIniReplaysNames.put(ReplaySaver.getReplays().size() + 1, "§6P-" + players1[0].getName() + "-" + players1[1].getName() + "-" + String.valueOf(ReplaySaver.getReplays().size() + 1));
 		}
-	}
 	
 	public static void stopGame(int INT) {
 		if (gameIniReplays.containsKey(INT)) {

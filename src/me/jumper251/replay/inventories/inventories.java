@@ -21,7 +21,7 @@ import me.jumper251.replay.utils.fetcher.Consumer;
 public class inventories {
 	public static Inventory replay_inv;
 	public static String replay;
-	public static int replay_Invrows = 7 * 9;
+	public static int replay_Invrows = 6 * 9;
 	
 	public static void initialize() {
 		replay = Utils.chat("&6Replay");
@@ -39,7 +39,7 @@ public class inventories {
 			}
 			replays.sort(dateComparator());
 			while (replays.size() >= e) {
-				Utils.createItem(replay_inv, 339, 1, e, replays.get(replays.size()-e), Utils.chat("&4Ausirius Replays"));
+				Utils.createItem(replay_inv, 339, 1, e, replays.get(replays.size()-e), Utils.chat("&7&l" + getCreationDate(replays.get(e-1))));
 				e++;
 			}
 			toReturn.setContents(replay_inv.getContents());
@@ -73,6 +73,10 @@ public class inventories {
 	public static void clicked(Player p, int slot, ItemStack clicked, String inv) {
 		if (inv.equals("replay")) {
 			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
+				if (!p.getLocation().getWorld().equals(Bukkit.getWorld("world"))) {
+					p.sendMessage(Utils.chat("&cYou must be at spawn to do this."));
+					return;
+				}
 				String replayName0 = clicked.getItemMeta().getDisplayName();
 				if (replayName0.startsWith("§6P")) {
 					if (!Bukkit.getServerName().equals("Practice")) {
