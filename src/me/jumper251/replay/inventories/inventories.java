@@ -29,18 +29,26 @@ public class inventories {
 		replay_inv = Bukkit.createInventory(null, replay_Invrows);
 	}
 	
-	public static Inventory GUI (Player p, String mode) {
+	public static Inventory GUI (Player p, String mode, int page) {
 		if (mode == "replay") {
-			Inventory toReturn = Bukkit.createInventory(null, replay_Invrows, replay);
+			Inventory toReturn = Bukkit.createInventory(null, replay_Invrows, replay + " " + page);
 			List<String> replays = ReplaySaver.getReplays();
 			int e = 1;
-			if (replays.size() == 0) {
+			if (replays.size() == 0 || replays.size() < e) {
 				return null;
 			}
 			replays.sort(dateComparator());
+			e = e + (page*45);
+			int current = 0;
 			while (replays.size() >= e) {
-				Utils.createItem(replay_inv, 339, 1, e, replays.get(replays.size()-e), Utils.chat("&7&l" + getCreationDate(replays.get(e-1))));
+				if (current <= 45) Utils.createItem(replay_inv, 339, 1, current, replays.get(replays.size()-e), Utils.chat("&7&l" + getCreationDate(replays.get(e-1))));
+				else {
+					if (current == 46) Utils.createItem(replay_inv, 152, 1, current, Utils.chat("&4Go back to the start"), "");
+					else if (current == 47) Utils.createItem(replay_inv, 55, 1, current, Utils.chat("&4Go back one page"), "");
+					else if (current == 54) Utils.createItem(replay_inv, 265, 1, current, Utils.chat("&4Go forwards one page"), "");
+				}
 				e++;
+				current++;
 			}
 			toReturn.setContents(replay_inv.getContents());
 			return toReturn;

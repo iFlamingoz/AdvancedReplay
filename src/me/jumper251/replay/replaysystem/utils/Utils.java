@@ -60,6 +60,8 @@ public class Utils {
 	}
 	
 	public static void Teleport(Player player, String world, double x, double y, double z) {
+		if (player.isInsideVehicle()) player.eject();
+		player.closeInventory();
 		player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
 	}
 }

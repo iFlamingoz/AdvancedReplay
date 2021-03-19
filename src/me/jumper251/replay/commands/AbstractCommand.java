@@ -53,8 +53,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 			
 			if (args.length == 0) {
 				Player player = (Player) cs;
-				if (inventories.GUI(player, "replay") != null) {
-					player.openInventory(inventories.GUI(player, "replay"));
+				if (inventories.GUI(player, "replay", 0) != null) {
+					player.openInventory(inventories.GUI(player, "replay", 0));
 				} else {
 					player.sendMessage(Utils.chat("&4Ausirius Replays - &cNo replays were found/is available."));
 				}
@@ -80,8 +80,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 		} else {
 			if (args.length == 0) {
 				Player player = (Player) cs;
-				if (inventories.GUI(player, "replay") != null) {
-					player.openInventory(inventories.GUI(player, "replay"));	
+				if (inventories.GUI(player, "replay", 0) != null) {
+					player.openInventory(inventories.GUI(player, "replay", 0));	
 				} else {
 					player.sendMessage(Utils.chat("&4Ausirius Replays - &cNo replays were found/is available."));
 				}
