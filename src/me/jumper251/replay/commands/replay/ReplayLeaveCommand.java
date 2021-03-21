@@ -26,17 +26,11 @@ public class ReplayLeaveCommand extends SubCommand {
 			Replayer replayer = ReplayHelper.replaySessions.get(p.getName());
 			
 			replayer.stop();
-			plugin().getServer().getScheduler().runTaskAsynchronously(plugin(), new Runnable() {
-				
-				@Override
-				public void run() {
-					if (Bukkit.getServerName().equals("Practice")) {
-						Utils.Teleport(p, "world", 4.5, 14, -5);	
-					} else if (Bukkit.getServerName().equals("Lobby")) {
-						Utils.Teleport(p, "world", 0.5, 16, 0.5);
-					}	
-				}
-			});
+			if (Bukkit.getServerName().equals("Practice")) {
+				Utils.Teleport(p, "world", 4.5, 14, -5);	
+			} else if (Bukkit.getServerName().equals("Lobby")) {
+				Utils.Teleport(p, "world", 0.5, 16, 0.5);
+			}	
 		} else {
 			p.sendMessage(ReplaySystem.PREFIX + "§cYou need to play a Replay first");
 		}

@@ -69,15 +69,6 @@ public class NPCManager {
 			packet4.setItem(fromID(data.getMainHand()));
 			list.add(packet4);
 		
-		
-		if(!VersionUtil.isCompatible(VersionEnum.V1_8)) {
-			WrapperPlayServerEntityEquipment packet5 = new WrapperPlayServerEntityEquipment();
-			packet5.setEntityID(id);
-			packet5.setSlot(ItemSlot.OFFHAND);
-			packet5.setItem(fromID(data.getOffHand()));
-			list.add(packet5);
-		}
-		
 		return list;
 	}
 	

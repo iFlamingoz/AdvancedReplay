@@ -143,7 +143,7 @@ public class ReplayAPI {
 				playerUUIDS.add(players[1].getUniqueId().toString());
 				gameIniReplays.put(ReplaySaver.getReplays().size()+1, playerUUIDS);
 			}
-		}, 13L);
+		}, 25L);
 		gameIniReplaysNames.put(ReplaySaver.getReplays().size() + 1, "§6P-" + players1[0].getName() + "-" + players1[1].getName() + "-" + String.valueOf(ReplaySaver.getReplays().size() + 1));
 		}
 	
