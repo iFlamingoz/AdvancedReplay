@@ -23,6 +23,7 @@ public class ReplayCommand extends AbstractCommand {
 				new ReplayListCommand(this), 
 				new ReplayReloadCommand(this),
 				new ReplayReformatCommand(this),
+				new ReplayStopAllCommand(this),
 				new ReplayMigrateCommand(this) };
 	}
 

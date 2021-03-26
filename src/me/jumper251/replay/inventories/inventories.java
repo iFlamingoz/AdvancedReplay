@@ -12,11 +12,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.jumper251.replay.ReplaySystem;
+import me.jumper251.replay.api.ReplayAPI;
 import me.jumper251.replay.filesystem.saving.DatabaseReplaySaver;
 import me.jumper251.replay.filesystem.saving.DefaultReplaySaver;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
 import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.utils.Utils;
+import me.jumper251.replay.utils.ReplayManager;
 import me.jumper251.replay.utils.fetcher.Consumer;
 
 public class inventories {
@@ -32,11 +34,13 @@ public class inventories {
 	
 	public static Inventory GUI (Player p, String mode, int page) {
 		if (mode == "replay") {
+			if (page*45 > ReplaySaver.getReplays().size()) return null;
 			Inventory toReturn = null;
 			if (page != 0) toReturn = Bukkit.createInventory(null, replay_Invrows, replay + " " + page);
 			else toReturn = Bukkit.createInventory(null, replay_Invrows, replay);
 			List<String> replays = ReplaySaver.getReplays();
-			int e = (page*45);
+			int e = 1;
+			if (page > 0) e = (page*45);
 			if (replays.size() == 0 || replays.size() < e) {
 				return null;
 			}
@@ -45,9 +49,9 @@ public class inventories {
 			while (replays.size() >= e) {
 				if (current <= 45) Utils.createItem(replay_inv, 339, 1, current, replays.get(replays.size()-e), Utils.chat("&7&l" + getCreationDate(replays.get(e-1))));
 				else {
-					if (current == 46) Utils.createItem(replay_inv, 152, 1, current, Utils.chat("&4Go back to the start"), "");
-					else if (current == 47) Utils.createItem(replay_inv, 331, 1, current, Utils.chat("&4Go back one page"), "");
-					else if (current == 54) Utils.createItem(replay_inv, 262, 1, current, Utils.chat("&4Go forwards one page"), "");
+					if (current == 46) Utils.createItem(replay_inv, 152, 1, current, Utils.chat("&4Start"), "");
+					else if (current == 47) Utils.createItem(replay_inv, 331, 1, current, Utils.chat("&c<--"), "");
+					else if (current == 54) Utils.createItem(replay_inv, 262, 1, current, Utils.chat("&a-->"), "");
 				}
 				e++;
 				current++;
@@ -80,7 +84,6 @@ public class inventories {
 		return null;
 	}
 	
-	@SuppressWarnings("incomplete-switch")
 	public static void clicked(Player p, int slot, ItemStack clicked, String inv, int page) {
 		if (inv.equals("replay")) {
 			if (ReplaySaver.exists(clicked.getItemMeta().getDisplayName())) {
@@ -139,6 +142,8 @@ public class inventories {
 						p.closeInventory();
 						p.sendMessage(Utils.chat("&7&lYou are already at the start!"));
 					}
+					break;
+				default:
 					break;
 				}
 			} else {

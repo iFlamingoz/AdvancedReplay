@@ -41,9 +41,7 @@ public class ReplaySystem extends JavaPlugin {
 				replay.getRecorder().stop(ConfigManager.SAVE_STOP);
 			}
 		}
-
 	}
-	
 	@Override
 	public void onEnable() {
 		instance = this;
