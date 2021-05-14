@@ -6,19 +6,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.jumper251.replay.ReplaySystem;
-import me.jumper251.replay.api.ReplayAPI;
 import me.jumper251.replay.filesystem.saving.DatabaseReplaySaver;
 import me.jumper251.replay.filesystem.saving.DefaultReplaySaver;
 import me.jumper251.replay.filesystem.saving.ReplaySaver;
 import me.jumper251.replay.replaysystem.Replay;
 import me.jumper251.replay.replaysystem.utils.Utils;
-import me.jumper251.replay.utils.ReplayManager;
 import me.jumper251.replay.utils.fetcher.Consumer;
 
 public class inventories {
@@ -47,14 +46,21 @@ public class inventories {
 			replays.sort(dateComparator());
 			int current = 1;
 			while (replays.size() >= e) {
-				if (current <= 45) Utils.createItem(replay_inv, 339, 1, current, replays.get(replays.size()-e), Utils.chat("&7&l" + getCreationDate(replays.get(e-1))));
+				if (current <= 45) {
+					String[] namesplit = replays.get(replays.size()-e).split("-");
+					for (String name : namesplit) {
+						if (ChatColor.stripColor(name).equals(p.getName())) {
+							Utils.createItem(replay_inv, 339, 1, current, replays.get(replays.size()-e), Utils.chat("&7&l" + getCreationDate(replays.get(e-1))));
+							current++;
+						}
+					}
+				}
 				else {
-					if (current == 46) Utils.createItem(replay_inv, 152, 1, current, Utils.chat("&4Start"), "");
-					else if (current == 47) Utils.createItem(replay_inv, 331, 1, current, Utils.chat("&c<--"), "");
-					else if (current == 54) Utils.createItem(replay_inv, 262, 1, current, Utils.chat("&a-->"), "");
+					if (current == 46) Utils.createItem(replay_inv, 152, 1, current, Utils.chat("&4Start"), "&7Go back to the start");
+					else if (current == 47) Utils.createItem(replay_inv, 331, 1, current, Utils.chat("&c<--"), "&7Go back");
+					else if (current == 54) Utils.createItem(replay_inv, 262, 1, current, Utils.chat("&a-->"), "&7Go forwards");
 				}
 				e++;
-				current++;
 			}
 			toReturn.setContents(replay_inv.getContents());
 			return toReturn;

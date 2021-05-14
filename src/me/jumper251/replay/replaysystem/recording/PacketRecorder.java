@@ -131,7 +131,6 @@ public class PacketRecorder extends AbstractListener{
                		if (event.getPacketType() == PacketType.Play.Client.ARM_ANIMATION) {
                			data = new AnimationData(0);
                		}
-               		
 
                		
                		if (event.getPacketType() == PacketType.Play.Client.BLOCK_DIG) {

@@ -44,6 +44,10 @@ public class ReplayAPI {
 	public int getActiveReplays() {
 		return ReplayManager.activeReplays.size();
 	}
+	
+	public int getTotalReplays() {
+		return getActiveReplays()+GetReplaysNum();
+	}
 
 	public Replay recordReplay(String name, CommandSender sender, Player... players) {
 		List<Player> toRecord = new ArrayList<Player>();
@@ -124,27 +128,28 @@ public class ReplayAPI {
 		ConsoleCommandSender cs = Bukkit.getConsoleSender();
 		Player[] players1 = new Player[playerList.size()];
 		players1 = playerList.toArray(players1);
+		int num = getInstance().getTotalReplays()+1;
 		Bukkit.getServer().getScheduler().runTaskLater(ReplaySystem.getInstance(), new Runnable() {
 			@Override
 			public void run() {
 				Player[] players = new Player[playerList.size()];
 				players = playerList.toArray(players);
 				if (Bukkit.getServerName().equals("Practice")) {
-					ReplayAPI.getInstance().recordReplay("§6P-" + players[0].getName() + "-" + players[1].getName() + "-"
-							+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
+					ReplayAPI.getInstance().recordReplay("§4P_" + players[0].getName() + "-" + players[1].getName() + "-"
+							+ String.valueOf(num), cs, players);
 				} else if (Bukkit.getServerName().equals("ArmsRace")) {
 					ReplayAPI.getInstance().recordReplay(Utils.chat("&6AR-" + players[0].getName() + "-" + players[1].getName() + "-")
-							+ String.valueOf(ReplaySaver.getReplays().size() + 1), cs, players);
+							+ String.valueOf(num), cs, players);
 				} else {
 					return;
 				}
 				List<String> playerUUIDS = new ArrayList<>();
 				playerUUIDS.add(players[0].getUniqueId().toString());
 				playerUUIDS.add(players[1].getUniqueId().toString());
-				gameIniReplays.put(ReplaySaver.getReplays().size()+1, playerUUIDS);
+				gameIniReplays.put(num, playerUUIDS);
 			}
-		}, 25L);
-		gameIniReplaysNames.put(ReplaySaver.getReplays().size() + 1, "§6P-" + players1[0].getName() + "-" + players1[1].getName() + "-" + String.valueOf(ReplaySaver.getReplays().size() + 1));
+		}, 20L);
+		gameIniReplaysNames.put(num, "§6P-" + players1[0].getName() + "-" + players1[1].getName() + "-" + String.valueOf(num));
 		}
 	
 	public static void stopGame(int INT) {
