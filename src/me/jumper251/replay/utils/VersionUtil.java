@@ -2,7 +2,6 @@ package me.jumper251.replay.utils;
 
 import java.lang.reflect.Field;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

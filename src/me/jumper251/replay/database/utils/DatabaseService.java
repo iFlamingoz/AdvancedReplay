@@ -1,9 +1,7 @@
 package me.jumper251.replay.database.utils;
 
 import java.sql.SQLException;
-
 import java.util.List;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

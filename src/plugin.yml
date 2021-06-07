@@ -1,9 +1,9 @@
 name: AusiriusReplay
 version: 1.6.4
 main: me.jumper251.replay.ReplaySystem
-author: Jumper251&iFlamingoz
+authors: [Jumper251, iFlamingoz]
 depend: [ProtocolLib]
 commands:
   replay:
-    description: View the replay
-    aliases: [rp, replays, repl]
+    description: Views the replay GUI
+    aliases: [rp, replays]

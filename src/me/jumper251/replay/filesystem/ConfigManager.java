@@ -1,7 +1,6 @@
 package me.jumper251.replay.filesystem;
 
 import java.io.File;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

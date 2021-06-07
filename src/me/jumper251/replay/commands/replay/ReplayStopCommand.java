@@ -3,7 +3,6 @@ package me.jumper251.replay.commands.replay;
 
 import java.util.Collections;
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 import org.bukkit.command.Command;

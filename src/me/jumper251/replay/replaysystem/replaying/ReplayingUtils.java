@@ -57,6 +57,7 @@ import me.jumper251.replay.replaysystem.data.types.WorldChangeData;
 import me.jumper251.replay.replaysystem.recording.PlayerWatcher;
 import me.jumper251.replay.replaysystem.utils.MetadataBuilder;
 import me.jumper251.replay.replaysystem.utils.NPCManager;
+import me.jumper251.replay.replaysystem.utils.Utils;
 import me.jumper251.replay.replaysystem.utils.entities.FishingUtils;
 import me.jumper251.replay.replaysystem.utils.entities.IEntity;
 import me.jumper251.replay.replaysystem.utils.entities.INPC;
@@ -199,18 +200,18 @@ public class ReplayingUtils {
 				BedEnterData bed = (BedEnterData) action.getPacketData();
 				
 				if (VersionUtil.isAbove(VersionEnum.V1_14)) {
-					npc.teleport(LocationData.toLocation(bed.getLocation()), true);
+					npc.teleport(LocationData.toLocation(bed.getLocation(), replayer.getWatchingPlayer().getWorld()), true);
 					
 					npc.setData(new MetadataBuilder(npc.getData())
 							.setPoseField("SLEEPING")
 							.getData());
 					
 					npc.updateMetadata();
-					npc.teleport(LocationData.toLocation(bed.getLocation()), true);
+					npc.teleport(LocationData.toLocation(bed.getLocation(), replayer.getWatchingPlayer().getWorld()), true);
 
 					
 				} else {
-					npc.sleep(LocationData.toLocation(bed.getLocation()));
+					npc.sleep(LocationData.toLocation(bed.getLocation(), replayer.getWatchingPlayer().getWorld()));
 				}
 			}
 			
@@ -240,7 +241,7 @@ public class ReplayingUtils {
 				if (entityData.getAction() == 0) {
 					if (!reversed) {
 					IEntity entity = VersionUtil.isCompatible(VersionEnum.V1_8) ? new PacketEntityOld(EntityType.valueOf(entityData.getType()))  : new PacketEntity(EntityType.valueOf(entityData.getType()));
-					entity.spawn(LocationData.toLocation(entityData.getLocation()), this.replayer.getWatchingPlayer());
+					entity.spawn(LocationData.toLocation(entityData.getLocation(), replayer.getWatchingPlayer().getWorld()), this.replayer.getWatchingPlayer());
 					replayer.getEntityList().put(entityData.getId(), entity);
 					} else if (replayer.getEntityList().containsKey(entityData.getId())){
 						IEntity ent = replayer.getEntityList().get(entityData.getId());
@@ -254,7 +255,7 @@ public class ReplayingUtils {
 					ent.remove();
 					} else {
 						IEntity entity = VersionUtil.isCompatible(VersionEnum.V1_8) ? new PacketEntityOld(EntityType.valueOf(entityData.getType()))  : new PacketEntity(EntityType.valueOf(entityData.getType()));
-						entity.spawn(LocationData.toLocation(entityData.getLocation()), this.replayer.getWatchingPlayer());
+						entity.spawn(LocationData.toLocation(entityData.getLocation(), replayer.getWatchingPlayer().getWorld()), this.replayer.getWatchingPlayer());
 						replayer.getEntityList().put(entityData.getId(), entity);
 					}
 				}
@@ -288,7 +289,7 @@ public class ReplayingUtils {
 			
 			if (action.getPacketData() instanceof WorldChangeData) {
 				WorldChangeData worldChange = (WorldChangeData) action.getPacketData();
-				Location loc = LocationData.toLocation(worldChange.getLocation());
+				Location loc = LocationData.toLocation(worldChange.getLocation(), replayer.getWatchingPlayer().getWorld());
 				
 				npc.despawn();
 				npc.setOrigin(loc);
@@ -331,7 +332,8 @@ public class ReplayingUtils {
 				npc.remove();
 				replayer.getNPCList().remove(action.getName());
 				
-				SpawnData oldSpawnData = new SpawnData(npc.getUuid(), LocationData.fromLocation(npc.getLocation()), signatures.get(action.getName()));
+				System.out.println(replayer.getWatchingPlayer().getWorld().getName());
+				SpawnData oldSpawnData = new SpawnData(npc.getUuid(), LocationData.fromLocation(npc.getLocation(), replayer.getWatchingPlayer().getWorld().getName()), signatures.get(action.getName()));
 				this.lastSpawnActions.addLast(new ActionData(0, ActionType.SPAWN, action.getName(), oldSpawnData));
 				
 				if (action.getType() == ActionType.DESPAWN) {
@@ -423,7 +425,7 @@ public class ReplayingUtils {
 		this.replayer.getReplay().getData().getWatchers().put(action.getName(), new PlayerWatcher(action.getName()));
 
 		int tabMode = Bukkit.getPlayer(action.getName()) != null ? 0 : 2;
-		Location spawn = LocationData.toLocation(spawnData.getLocation());
+		Location spawn = LocationData.toLocation(spawnData.getLocation(), replayer.getWatchingPlayer().getWorld());
 		
 		if(VersionUtil.isCompatible(VersionEnum.V1_8)) {
 			npc.setData(new MetadataBuilder(this.replayer.getWatchingPlayer()).resetValue().getData());
@@ -457,8 +459,8 @@ public class ReplayingUtils {
 			
 				@Override
 				public void run() {
-					Projectile proj = (Projectile) world.spawnEntity(LocationData.toLocation(projData.getSpawn()), projData.getType());
-					proj.setVelocity(LocationData.toLocation(projData.getVelocity()).toVector());
+					Projectile proj = (Projectile) world.spawnEntity(LocationData.toLocation(projData.getSpawn(), replayer.getWatchingPlayer().getWorld()), projData.getType());
+					proj.setVelocity(LocationData.toLocation(projData.getVelocity(), replayer.getWatchingPlayer().getWorld()).toVector());
 				
 				}
 			}.runTask(ReplaySystem.getInstance());
@@ -474,7 +476,8 @@ public class ReplayingUtils {
 	}
 	
 	private void setBlockChange(BlockChangeData blockChange) {
-		final Location loc = LocationData.toLocation(blockChange.getLocation());
+		final Location loc = LocationData.toLocation(blockChange.getLocation(), replayer.getWatchingPlayer().getWorld());
+		loc.setWorld(Bukkit.getWorld(Utils.OGWorldsCheck(blockChange.getLocation().getWorld()).toUpperCase() + "1"));
 		
 		if (ConfigManager.WORLD_RESET && ! this.replayer.getBlockChanges().containsKey(loc)) {
 			this.replayer.getBlockChanges().put(loc, blockChange.getBefore());
@@ -522,14 +525,23 @@ public class ReplayingUtils {
 	}
 	
 	private void spawnItemStack(EntityItemData entityData) {
-		final Location loc = LocationData.toLocation(entityData.getLocation());
-		
+		final Location loc = LocationData.toLocation(entityData.getLocation(), replayer.getWatchingPlayer().getWorld());
+//		if (loc.getWorld() == null) {
+//			System.out.println("A");
+//			return;
+//		}
+//		
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
-				Item item = loc.getWorld().dropItemNaturally(loc, NPCManager.fromID(entityData.getItemData()));
-				item.setVelocity(LocationData.toLocation(entityData.getVelocity()).toVector());
+				Item item;
+				try {
+					item = loc.getWorld().dropItemNaturally(loc, NPCManager.fromID(entityData.getItemData()));
+					item.setVelocity(LocationData.toLocation(entityData.getVelocity(), replayer.getWatchingPlayer().getWorld()).toVector());	
+				} catch (Exception e) {
+					return;
+				}
 				
 				itemEntities.put(entityData.getId(), item);
 				

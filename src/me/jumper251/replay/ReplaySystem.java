@@ -6,8 +6,6 @@ import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
-
 import me.jumper251.replay.filesystem.ConfigManager;
 import me.jumper251.replay.filesystem.saving.DatabaseReplaySaver;
 import me.jumper251.replay.filesystem.saving.DefaultReplaySaver;
@@ -70,6 +68,6 @@ public class ReplaySystem extends JavaPlugin {
 	
 	
 	public static ReplaySystem getInstance() {
-		return instance;
+		return (ReplaySystem) Bukkit.getPluginManager().getPlugin("AusiriusReplay");
 	}
 }

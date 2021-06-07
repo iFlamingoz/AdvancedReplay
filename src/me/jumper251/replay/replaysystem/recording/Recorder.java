@@ -153,6 +153,7 @@ public class Recorder {
 		this.run.cancel();
 
 		if (save) {
+			
 			this.data.setDuration(this.currentTick);
 			this.data.setCreator(this.sender.getName());
 			this.data.setWatchers(new HashMap<String, PlayerWatcher>());
@@ -188,7 +189,7 @@ public class Recorder {
 						signArr[0] =  new SignatureData(props.get("name"), props.get("value"), props.get("signature"));
 					}
 					
-					ActionData spawnData = new ActionData(0, ActionType.SPAWN, player.getName(), new SpawnData(player.getUniqueId(), LocationData.fromLocation(loc), signArr[0]));
+					ActionData spawnData = new ActionData(0, ActionType.SPAWN, player.getName(), new SpawnData(player.getUniqueId(), LocationData.fromLocation(loc, player.getWorld().getName()), signArr[0]));
 					addData(first ? 0 : currentTick, spawnData);
 				
 					ActionData invData = new ActionData(0, ActionType.PACKET, player.getName(), NPCManager.copyFromPlayer(player, true, true));
@@ -205,7 +206,7 @@ public class Recorder {
 		}
 		
 		if (!ConfigManager.USE_OFFLINE_SKINS || Bukkit.getOnlineMode()) {
-			ActionData spawnData = new ActionData(0, ActionType.SPAWN, player.getName(), new SpawnData(player.getUniqueId(), LocationData.fromLocation(loc), signArr[0]));
+			ActionData spawnData = new ActionData(0, ActionType.SPAWN, player.getName(), new SpawnData(player.getUniqueId(), LocationData.fromLocation(loc, player.getWorld().getName()), signArr[0]));
 			addData(currentTick, spawnData);
 		
 			ActionData invData = new ActionData(currentTick, ActionType.PACKET, player.getName(), NPCManager.copyFromPlayer(player, true, true));

@@ -59,6 +59,7 @@ public class inventories {
 					if (current == 46) Utils.createItem(replay_inv, 152, 1, current, Utils.chat("&4Start"), "&7Go back to the start");
 					else if (current == 47) Utils.createItem(replay_inv, 331, 1, current, Utils.chat("&c<--"), "&7Go back");
 					else if (current == 54) Utils.createItem(replay_inv, 262, 1, current, Utils.chat("&a-->"), "&7Go forwards");
+					current++;
 				}
 				e++;
 			}
@@ -98,17 +99,7 @@ public class inventories {
 					return;
 				}
 				String replayName0 = clicked.getItemMeta().getDisplayName();
-				if (replayName0.startsWith("§6P")) {
-					if (!Bukkit.getServerName().equals("Practice")) {
-						p.sendMessage(Utils.chat("Sorry but you must be in practice to view this replay!"));
-						return;
-					}
-				} else if (replayName0.startsWith("§6AR")) {
-					if (!Bukkit.getServerName().equals("ArmsRace")) {
-						p.sendMessage(Utils.chat("Sorry but you must be in ArmsRace to view this replay!"));
-						return;
-					}
-				} else {
+				if (!replayName0.startsWith("§4P") && !replayName0.startsWith("§6AR")) {
 					p.sendMessage(Utils.chat("&4Incorrect replay arguments!"));
 					return;
 				}

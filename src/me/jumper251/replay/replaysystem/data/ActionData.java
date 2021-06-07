@@ -2,7 +2,6 @@ package me.jumper251.replay.replaysystem.data;
 
 import java.io.Serializable;
 
-
 import me.jumper251.replay.replaysystem.data.types.PacketData;
 
 public class ActionData implements Serializable{

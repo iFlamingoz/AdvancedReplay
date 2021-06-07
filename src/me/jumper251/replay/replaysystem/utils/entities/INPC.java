@@ -1,10 +1,7 @@
 package me.jumper251.replay.replaysystem.utils.entities;
 
 import java.util.List;
-
 import java.util.UUID;
-
-
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

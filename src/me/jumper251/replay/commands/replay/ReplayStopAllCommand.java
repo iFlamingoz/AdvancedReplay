@@ -9,6 +9,7 @@ import me.jumper251.replay.commands.AbstractCommand;
 import me.jumper251.replay.commands.SubCommand;
 import me.jumper251.replay.filesystem.ConfigManager;
 import me.jumper251.replay.replaysystem.Replay;
+import me.jumper251.replay.replaysystem.utils.Utils;
 import me.jumper251.replay.utils.ReplayManager;
 
 public class ReplayStopAllCommand extends SubCommand{
@@ -19,7 +20,7 @@ public class ReplayStopAllCommand extends SubCommand{
 	@Override
 	public boolean execute(CommandSender sender, Command cmd, String label, String[] args) {
 		if (ReplayManager.activeReplays.size() == 0) {
-			sender.sendMessage("Sorry there does not seem like there are replay active!");
+			sender.sendMessage(Utils.chat("&cSorry there does not seem like there are active replays!"));
 			return true;
 		}
 		for (Replay replay : new HashMap<>(ReplayManager.activeReplays).values()) {

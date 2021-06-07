@@ -2,8 +2,8 @@ package me.jumper251.replay.replaysystem.data.types;
 
 import java.io.Serializable;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 public class LocationData implements Serializable{
 
@@ -58,12 +58,13 @@ public class LocationData implements Serializable{
 	}
 	
 	
-	public static LocationData fromLocation(Location loc) {
-		return new LocationData(loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
+	public static LocationData fromLocation(Location loc, String backupWorld) {
+		return new LocationData(loc.getX(), loc.getY(), loc.getZ(), backupWorld);
 	}
 	
-	public static Location toLocation(LocationData locationData) {
-		return new Location(Bukkit.getWorld(locationData.getWorld()), locationData.getX(), locationData.getY(), locationData.getZ());
+	public static Location toLocation(LocationData locationData, World backupWorld) {
+//		if (!Bukkit.getWorlds().contains(Bukkit.getWorld(locationData.getWorld()))) new Location(Bukkit.getWorld(Utils.OGWorldsCheck(locationData.getWorld()) + "1"), locationData.getX(), locationData.getY(), locationData.getZ());
+		return new Location(backupWorld, locationData.getX(), locationData.getY(), locationData.getZ());
 	}
 
 }

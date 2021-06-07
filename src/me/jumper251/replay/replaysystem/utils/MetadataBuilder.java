@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 
 import org.bukkit.entity.Entity;
 
-
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 
 import me.jumper251.replay.utils.VersionUtil;

@@ -171,7 +171,7 @@ public class PacketRecorder extends AbstractListener{
             				Entity en = packet.getEntity(p.getWorld());
             				if (en != null && en instanceof Item) {
             					Item item = (Item) en;
-            					LocationData velocity = LocationData.fromLocation(item.getVelocity().toLocation(p.getWorld()));
+            					LocationData velocity = LocationData.fromLocation(item.getVelocity().toLocation(p.getWorld()), p.getWorld().getName());
 
             					addData(p.getName(), new EntityItemData(0, packet.getEntityID(), NPCManager.fromItemStack(item.getItemStack()), location, velocity));
             					

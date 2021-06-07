@@ -2,7 +2,6 @@ package me.jumper251.replay.utils;
 
 import java.util.HashMap;
 
-
 import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.commands.replay.ReplayCommand;
 import me.jumper251.replay.listener.ReplayListener;

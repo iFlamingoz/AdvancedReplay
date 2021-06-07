@@ -74,7 +74,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 						return true;
 					}
 				}
-				cs.sendMessage(this.format.getNotFoundMessage());
+				cs.sendMessage(Utils.chat("&cInvalid Arguments!"));
 			}
 			
 		} else {

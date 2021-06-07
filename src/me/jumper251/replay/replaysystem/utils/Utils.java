@@ -64,4 +64,15 @@ public class Utils {
 		player.closeInventory();
 		player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
 	}
+	
+	public static String OGWorldsCheck(String worldname) {
+		String name = worldname.toLowerCase();
+		if (name.startsWith("node")) return "node";
+		else if (name.startsWith("soup")) return "soup";
+		else if (name.startsWith("sumo")) return "sumo";
+		else if (name.startsWith("combo")) return "combo";
+		else if (name.startsWith("bridge")) return "bridge";
+		else if (name.startsWith("parkour")) return "parkour";
+		else return "none";
+	}
 }

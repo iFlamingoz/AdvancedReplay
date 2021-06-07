@@ -14,12 +14,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import com.comphenix.packetwrapper.WrapperPlayServerTitle;
 import com.comphenix.protocol.wrappers.EnumWrappers.TitleAction;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
 import me.jumper251.replay.filesystem.ItemConfig;
 import me.jumper251.replay.filesystem.ItemConfigOption;
 import me.jumper251.replay.filesystem.ItemConfigType;
-
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
 
 public class ReplayHelper {
@@ -106,7 +105,9 @@ public class ReplayHelper {
 	}
 	
 	public static boolean isInRange(Location loc1, Location loc2) {
-		return loc1.getWorld().getName().equals(loc2.getWorld().getName()) && (loc1.distance(loc2) <= 90D);
+		return true;
+//		if (loc1 == null || loc2 == null || !Bukkit.getWorlds().contains(loc1.getWorld()) || !Bukkit.getWorlds().contains(loc2.getWorld())) return false;
+//		return loc1.getWorld().getName().equals(loc2.getWorld().getName()) && (loc1.distance(loc2) <= 90D);
 	}
 	
 }

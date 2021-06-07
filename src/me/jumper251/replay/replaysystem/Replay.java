@@ -1,13 +1,11 @@
 package me.jumper251.replay.replaysystem;
 
 import java.util.Arrays;
-
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 
 import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.replaysystem.data.ReplayData;

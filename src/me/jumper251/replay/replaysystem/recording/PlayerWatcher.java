@@ -1,6 +1,7 @@
 package me.jumper251.replay.replaysystem.recording;
 
 import java.io.Serializable;
+
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 
 import me.jumper251.replay.replaysystem.utils.MetadataBuilder;

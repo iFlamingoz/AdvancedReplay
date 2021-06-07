@@ -149,7 +149,7 @@ public class ReplayAPI {
 				gameIniReplays.put(num, playerUUIDS);
 			}
 		}, 20L);
-		gameIniReplaysNames.put(num, "§6P-" + players1[0].getName() + "-" + players1[1].getName() + "-" + String.valueOf(num));
+		gameIniReplaysNames.put(num, "§4P_" + players1[0].getName() + "-" + players1[1].getName() + "-" + String.valueOf(num));
 		}
 	
 	public static void stopGame(int INT) {
@@ -163,11 +163,13 @@ public class ReplayAPI {
 					replay.getRecorder().stop(true);
 				}
 			} else {
-				Bukkit.getLogger().warning("WARN: STOP KEY WAS NOT RECORDING/DID NOT EXIST! " + INT);
+				Bukkit.getLogger().warning("WARN: STOP KEY WAS NOT RECORDING/DID NOT EXIST! " + name + "AVAILABLE NAMES:");
+				for (String names : ReplayManager.activeReplays.keySet()) Bukkit.getLogger().warning(names);
 				return;
 			}
 		} else {
-			Bukkit.getLogger().warning("WARN: STOP KEY WAS INCORRECT! " + INT);
+			Bukkit.getLogger().warning("WARN: STOP KEY WAS INCORRECT! " + INT + "AVAILABLE KEYS:");
+			for (int num : gameIniReplays.keySet()) Bukkit.getLogger().warning(String.valueOf(num));
 			return;
 		}
 	}

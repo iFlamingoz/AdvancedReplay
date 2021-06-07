@@ -1,25 +1,17 @@
 package me.jumper251.replay.replaysystem.replaying;
 
 import java.util.ArrayList;
-
-
 import java.util.Collection;
 import java.util.HashMap;
-
-
-
-
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-
 
 import me.jumper251.replay.ReplaySystem;
 import me.jumper251.replay.api.IReplayHook;
@@ -32,6 +24,7 @@ import me.jumper251.replay.replaysystem.data.ReplayData;
 import me.jumper251.replay.replaysystem.data.types.ItemData;
 import me.jumper251.replay.replaysystem.data.types.LocationData;
 import me.jumper251.replay.replaysystem.data.types.SpawnData;
+import me.jumper251.replay.replaysystem.utils.Utils;
 import me.jumper251.replay.replaysystem.utils.entities.IEntity;
 import me.jumper251.replay.replaysystem.utils.entities.INPC;
 
@@ -77,18 +70,33 @@ public class Replayer {
 	public void start() {
 		ReplayData data = this.replay.getData();
 		int duration = data.getDuration();
-		
 		if (data.getActions().containsKey(0)) {
 			for (ActionData startData : data.getActions().get(0)) {
 				if (startData.getPacketData() instanceof SpawnData) {
 					SpawnData spawnData = (SpawnData) startData.getPacketData();
-					watcher.teleport(LocationData.toLocation(spawnData.getLocation()));
+					if (Bukkit.getWorlds().contains(Bukkit.getWorld(spawnData.getLocation().getWorld()))) watcher.teleport(LocationData.toLocation(spawnData.getLocation(), watcher.getWorld()));
+					else {
+						if (Utils.OGWorldsCheck(spawnData.getLocation().getWorld()) == "none") {
+							watcher.sendMessage(Utils.chat("&cError: world not in list."));
+							return;
+						}
+						if (!Bukkit.getWorlds().contains(Bukkit.getWorld(Utils.OGWorldsCheck(spawnData.getLocation().getWorld()).toUpperCase() + "1"))) {
+							watcher.sendMessage(Utils.chat("&cError: world in list does not exist."));
+							return;
+						}
+						Location loc = LocationData.toLocation(spawnData.getLocation(), watcher.getWorld());
+						loc.setWorld(Bukkit.getWorld(Utils.OGWorldsCheck(spawnData.getLocation().getWorld()).toUpperCase() + "1"));
+						watcher.teleport(loc);
+//						Utils.Teleport(watcher, Bukkit.getWorld(Utils.OGWorldsCheck(spawnData.getLocation().getWorld()).toUpperCase() + "1").getName(), spawnData.getLocation().getX(), spawnData.getLocation().getY(), spawnData.getLocation().getY());
+					}
 					break;
 				}
 			}
 		} else {
 			Optional<SpawnData> spawnData = findFirstSpawn(data);
-			if (spawnData.isPresent()) watcher.teleport(LocationData.toLocation(spawnData.get().getLocation()));
+			Location loc = LocationData.toLocation(spawnData.get().getLocation(), watcher.getWorld());
+			loc.setWorld(Bukkit.getWorld(Utils.OGWorldsCheck(loc.getWorld().getName()).toUpperCase() + "1"));
+			if (spawnData.isPresent()) watcher.teleport(loc);
 		}
 		
 		
